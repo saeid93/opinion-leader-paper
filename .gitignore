@@ -1,0 +1,6 @@
+# Datasets
+Datasets/
+
+#junk
+__pycache__/
+.idea/
