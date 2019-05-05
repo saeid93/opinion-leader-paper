@@ -23,7 +23,7 @@ class reader:
         fromCol = data[:,0].astype(int)
         toCol = data[:, 1].astype(int)
         weightCol = data[:, 2]
-        data = sparse.csr_matrix((weightCol, (fromCol, toCol)), (self.numOfNodes+1,self.numOfNodes+1))
+        data = sparse.csr_matrix((weightCol, (fromCol, toCol)), (self.numOfNodes,self.numOfNodes))
         return data
     # def toAdjMatrix(self):
 
