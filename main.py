@@ -2,7 +2,7 @@ from reader import reader
 from topKFinder import topKFinder
 
 def main():
-    alpha = 0.5
+    alpha = 0.2
     numOfNodes = 6541
     # if index is from 1
     numOfNodes = numOfNodes + 1

@@ -1,4 +1,5 @@
 import numpy as np
+import heapq
 
 
 class topKFinder:
@@ -14,6 +15,8 @@ class topKFinder:
     def findingNeighbors(self):
         for i in range(0,self.numOfNodes):
             self.inNeighbors[i] = np.nonzero(self.graph[:,i])[0]
+        # print(self.inNeighbors)
+
 
     # computing indegree and outdegrees
     def initialVals(self):
@@ -33,17 +36,35 @@ class topKFinder:
         influTM1 = influ0
 
         # indicator array of the number of present at each iteration
-        presentNodes = list(range(0,self.numOfNodes))
+        presentNodes = np.array(list(range(0,self.numOfNodes)))
         t = 0
-        while np.sum(presentNodes)>self.k:
+        while np.shape(presentNodes)[0]>self.k:
             t+=1
             for node in presentNodes:
                 neighbors = self.inNeighbors[node]
                 sumOfInN = 0
                 for neighbor in neighbors:
-                    sumOfInN += self.graph[neighbor][node]*influTM1[neighbor]
+                    sumOfInN += self.graph[neighbor,node]*influTM1[neighbor]
+
                 # influence update function
                 influT[node] = self.alpha * influ0[node] + (1 - self.alpha) * sumOfInN
+
+                # find kth largest max, influ max, influ min at each iteration
+                kthInfluMax = influT[np.argsort(influT)[-self.k]]
+                influMax = influT.max()
+                influMin = influT.min()
+
+
+            # presentNodes1 = presentNodes
+            # print(np.shape(presentNodes))
+            presentNodes =  presentNodes[(kthInfluMax - influT[presentNodes]) <= ((2 * (1-self.alpha)**t) * (influMax - influMin))]
+
+            print(np.shape(presentNodes))
+                    # presentNodes = np.delete(presentNodes,node)
+
+
+            # print(np.shape(presentNodes1))
+
 
 
             # save the influence values for the next iteration
