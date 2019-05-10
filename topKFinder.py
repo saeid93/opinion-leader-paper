@@ -1,6 +1,4 @@
 import numpy as np
-import heapq
-
 
 class topKFinder:
     def __init__(self,graph,k,numOfNodes,alpha):
@@ -15,7 +13,7 @@ class topKFinder:
     def findingNeighbors(self):
         for i in range(0,self.numOfNodes):
             self.inNeighbors[i] = np.nonzero(self.graph[:,i])[0]
-        # print(self.inNeighbors)
+
 
 
     # computing indegree and outdegrees
@@ -58,14 +56,6 @@ class topKFinder:
             # presentNodes1 = presentNodes
             # print(np.shape(presentNodes))
             presentNodes =  presentNodes[(kthInfluMax - influT[presentNodes]) <= ((2 * (1-self.alpha)**t) * (influMax - influMin))]
-
-            print(np.shape(presentNodes))
-                    # presentNodes = np.delete(presentNodes,node)
-
-
-            # print(np.shape(presentNodes1))
-
-
-
-            # save the influence values for the next iteration
             influTM1 = influT
+
+        return presentNodes
