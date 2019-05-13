@@ -1,6 +1,10 @@
 # Datasets
 Datasets/
+topKNodes/
 
 #junk
 __pycache__/
 .idea/
+
+#test
+test.py
