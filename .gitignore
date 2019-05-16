@@ -1,6 +1,7 @@
 # Datasets
 Datasets/
 topKNodes/
+trends/
 
 #junk
 __pycache__/
