@@ -44,6 +44,7 @@ def main():
         write2file("topKNodes/" + dataset + "/pagerank.csv", PageRankCenSeed)
 
         # influence maximization based methods
+        
 
 
     # ----------compute opinion formation modes trends----------
@@ -51,7 +52,7 @@ def main():
     elif option == 2:
 
         # read previously computed seeds from the hdd
-
+        PropSeed = np.loadtxt("topKNodes/" + dataset + "/proposedMethod.csv",dtype=int)
         BetCenSeed = np.loadtxt("topKNodes/" + dataset + "/betweeness.csv",dtype=int)
         ClosCenSeed = np.loadtxt("topKNodes/" + dataset + "/closeness.csv",dtype=int)
         EigenCenSeed = np.loadtxt("topKNodes/" + dataset + "/eigenvector.csv",dtype=int)
@@ -59,9 +60,9 @@ def main():
 
 
         # Proposed method
-        opForm = opinionFromationModel(data,BetCenSeed)
-        betTrendDegroot = opForm.degroot()
-        write2file("trends/" + dataset + "/degroot/betweeness.csv", betTrendDegroot)
+        opForm = opinionFromationModel(data,PropSeed)
+        PropDegroot = opForm.degroot()
+        write2file("trends/" + dataset + "/degroot/proposedMethod.csv", PropDegroot)
         betTrendProposedModel = opForm.proposedModel()
         # write2file("trends/" + dataset + "/proposedModel/betweeness.csv", betTrendProposedModel)
         betTrendAddMethod = opForm.addMethod()
