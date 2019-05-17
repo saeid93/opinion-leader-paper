@@ -8,12 +8,20 @@ class opinionFromationModel:
         self.seed = seed
 
 
-    def makeDegrootTruthMatrix(self):
+    def calculateDiffernceCen(self):
         # find indegrees and outdergrees
         self.outdegree = [np.sum(row) for row in self.graph]
         self.indegree = [np.sum(row) for row in np.transpose(self.graph)]
         # find difference of these two
         self.differnece = np.array(self.outdegree) - np.array(self.indegree)
+
+    def makeDegrootTruthMatrix(self):
+        # # find indegrees and outdergrees
+        # self.outdegree = [np.sum(row) for row in self.graph]
+        # self.indegree = [np.sum(row) for row in np.transpose(self.graph)]
+        # # find difference of these two
+        # self.differnece = np.array(self.outdegree) - np.array(self.indegree)
+        self.calculateDiffernceCen()
         # to make them all positive
         self.centrality = self.differnece - np.min(self.differnece)
         # templeate of the truth matrix
@@ -42,7 +50,9 @@ class opinionFromationModel:
 
         while np.abs(trend[len(trend) - 1] - trend[len(trend) - 2]) >= epsilon:
             opinions = np.matmul(self.DegrootTruth,opinions)
-            trend = trend + [np.sum(opinions)]
+            trend.append(np.sum(opinions))
+        trend.pop(0)
+        trend.pop(0)
         return trend
         # print("degroot")
 
