@@ -3,6 +3,7 @@ from reader import reader
 from topKFinder import topKFinder
 from otherTopK import otherTopK
 from opinionFormationModel import opinionFromationModel
+from IMMethods import IMMethods
 import numpy as np
 import time
 
@@ -25,7 +26,6 @@ def main():
     dataset = "advogato"
     read = reader("Datasets/" + dataset + ".txt", numOfNodes)
     data = read.reader()
-
     # ----------top-k nodes finder----------
 
     if option == 1:
@@ -44,7 +44,8 @@ def main():
         write2file("topKNodes/" + dataset + "/pagerank.csv", PageRankCenSeed)
 
         # influence maximization based methods
-        
+        IM = IMMethods(dataset, seedSize)
+        IM.runIM()
 
 
     # ----------compute opinion formation modes trends----------

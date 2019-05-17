@@ -57,5 +57,5 @@ class topKFinder:
             # print(np.shape(presentNodes))
             presentNodes =  presentNodes[(kthInfluMax - influT[presentNodes]) <= ((2 * (1-self.alpha)**t) * (influMax - influMin))]
             influTM1 = influT
-
+        print("method 1/7 completed")
         return presentNodes
