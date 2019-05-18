@@ -52,59 +52,99 @@ def main():
 
     elif option == 2:
 
+
+        def opinionFromation(method,seed):
+            opForm = opinionFromationModel(data, seed)
+            trendDegroot = opForm.degroot()
+            write2file("trends/" + dataset + "/degroot/" + method + ".csv", trendDegroot)
+            print("Degroot of " + method + " is done")
+            trendProposedModel = opForm.proposedModel()
+            write2file("trends/" + dataset + "/proposedModel/" + method + ".csv", trendProposedModel)
+            print("Proposed Opinion formation of " + method + " is done")
+            trendAddMethod = opForm.addMethod()
+            # write2file("trends/" + dataset + "/addMethod/" + method + ".csv", trendAddMethod)
+            print("Added Opinion formation of " + method + " is done")
+
         # read previously computed seeds from the hdd
         PropSeed = np.loadtxt("topKNodes/" + dataset + "/proposedMethod.csv",dtype=int)
         BetCenSeed = np.loadtxt("topKNodes/" + dataset + "/betweeness.csv",dtype=int)
         ClosCenSeed = np.loadtxt("topKNodes/" + dataset + "/closeness.csv",dtype=int)
         EigenCenSeed = np.loadtxt("topKNodes/" + dataset + "/eigenvector.csv",dtype=int)
         PageRankCenSeed = np.loadtxt("topKNodes/" + dataset + "/pagerank.csv",dtype=int)
+        StaticGreedySeed = np.loadtxt("topKNodes/" + dataset + "/StaticGreedy.csv",dtype=int)
+        IMRankSeed = np.loadtxt("topKNodes/" + dataset + "/IMRank.csv",dtype=int)
 
 
-        # Proposed method
-        opForm = opinionFromationModel(data,PropSeed)
-        PropDegroot = opForm.degroot()
-        write2file("trends/" + dataset + "/degroot/proposedMethod.csv", PropDegroot)
-        betTrendProposedModel = opForm.proposedModel()
+        opinionFromation("proposedMethod",PropSeed)
+        opinionFromation("betweeness", BetCenSeed)
+        opinionFromation("closeness", ClosCenSeed)
+        opinionFromation("eigenvector", EigenCenSeed)
+        opinionFromation("pagerank", PageRankCenSeed)
+        opinionFromation("StaticGreedy", StaticGreedySeed)
+        opinionFromation("IMRank", IMRankSeed)
+
+        # # Proposed method
+        # opForm = opinionFromationModel(data,PropSeed)
+        # PropDegroot = opForm.degroot()
+        # write2file("trends/" + dataset + "/degroot/proposedMethod.csv", PropDegroot)
+        # betTrendProposedModel = opForm.proposedModel()
+        # write2file("trends/" + dataset + "/proposedModel/proposedMethod.csv", betTrendProposedModel)
+        # betTrendAddMethod = opForm.addMethod()
+        # # write2file("trends/" + dataset + "/addMethod/betweeness.csv", betTrendAddMethod)
+        #
+        # # # Static Greedy
+        # # opForm = opinionFromationModel(data,PropSeed)
+        # # SGDegroot = opForm.degroot()
+        # # write2file("trends/" + dataset + "/degroot/StaticGreedy.csv", SGDegroot)
+        # # betTrendSG = opForm.proposedModel()
+        # # write2file("trends/" + dataset + "/proposedModel/proposedMethod.csv", betTrendProposedModel)
+        # # betTrendAddMethod = opForm.addMethod()
+        # # # write2file("trends/" + dataset + "/addMethod/betweeness.csv", betTrendAddMethod)
+        # #
+        # # # IMRank
+        # # opForm = opinionFromationModel(data,PropSeed)
+        # # PropDegroot = opForm.degroot()
+        # # write2file("trends/" + dataset + "/degroot/proposedMethod.csv", PropDegroot)
+        # # betTrendProposedModel = opForm.proposedModel()
+        # # write2file("trends/" + dataset + "/proposedModel/proposedMethod.csv", betTrendProposedModel)
+        # # betTrendAddMethod = opForm.addMethod()
+        # # # write2file("trends/" + dataset + "/addMethod/betweeness.csv", betTrendAddMethod)
+        #
+        # # betweeness
+        # opForm = opinionFromationModel(data,BetCenSeed)
+        # betTrendDegroot = opForm.degroot()
+        # write2file("trends/" + dataset + "/degroot/betweeness.csv", betTrendDegroot)
+        # betTrendProposedModel = opForm.proposedModel()
         # write2file("trends/" + dataset + "/proposedModel/betweeness.csv", betTrendProposedModel)
-        betTrendAddMethod = opForm.addMethod()
-        # write2file("trends/" + dataset + "/addMethod/betweeness.csv", betTrendAddMethod)
-
-
-        # betweeness
-        opForm = opinionFromationModel(data,BetCenSeed)
-        betTrendDegroot = opForm.degroot()
-        write2file("trends/" + dataset + "/degroot/betweeness.csv", betTrendDegroot)
-        betTrendProposedModel = opForm.proposedModel()
-        # write2file("trends/" + dataset + "/proposedModel/betweeness.csv", betTrendProposedModel)
-        betTrendAddMethod = opForm.addMethod()
-        # write2file("trends/" + dataset + "/addMethod/betweeness.csv", betTrendAddMethod)
-
-        # closeness
-        opForm = opinionFromationModel(data,ClosCenSeed)
-        closTrendDegroot = opForm.degroot()
-        write2file("trends/" + dataset + "/degroot/closeness.csv", closTrendDegroot)
-        closTrendProposedModel = opForm.proposedModel()
+        # betTrendAddMethod = opForm.addMethod()
+        # # write2file("trends/" + dataset + "/addMethod/betweeness.csv", betTrendAddMethod)
+        #
+        # # closeness
+        # opForm = opinionFromationModel(data,ClosCenSeed)
+        # closTrendDegroot = opForm.degroot()
+        # write2file("trends/" + dataset + "/degroot/closeness.csv", closTrendDegroot)
+        # closTrendProposedModel = opForm.proposedModel()
         # write2file("trends/" + dataset + "/proposedModel/closeness.csv", closTrendProposedModel)
-        betTrendAddMethod = opForm.addMethod()
-        # write2file("trends/" + dataset + "/addMethod/closeness.csv", betTrendAddMethod)
-
-        # eigenvector
-        opForm = opinionFromationModel(data, EigenCenSeed)
-        eigenTrendDegroot = opForm.degroot()
-        write2file("trends/" + dataset + "/degroot/eigenvector.csv", eigenTrendDegroot)
-        eigenTrendProposedModel = opForm.proposedModel()
+        # betTrendAddMethod = opForm.addMethod()
+        # # write2file("trends/" + dataset + "/addMethod/closeness.csv", betTrendAddMethod)
+        #
+        # # eigenvector
+        # opForm = opinionFromationModel(data, EigenCenSeed)
+        # eigenTrendDegroot = opForm.degroot()
+        # write2file("trends/" + dataset + "/degroot/eigenvector.csv", eigenTrendDegroot)
+        # eigenTrendProposedModel = opForm.proposedModel()
         # write2file("trends/" + dataset + "/proposedModel/eigenvector.csv", eigenTrendProposedModel)
-        eigenTrendAddMethod = opForm.addMethod()
-        # write2file("trends/" + dataset + "/addMethod/eigenvector.csv", eigenTrendAddMethod)
-
-        # pageRank
-        opForm = opinionFromationModel(data, PageRankCenSeed)
-        pageRankCenSeed = opForm.degroot()
-        write2file("trends/" + dataset + "/degroot/pageRank.csv", pageRankCenSeed)
-        pageRankTrendProposedModel = opForm.proposedModel()
+        # eigenTrendAddMethod = opForm.addMethod()
+        # # write2file("trends/" + dataset + "/addMethod/eigenvector.csv", eigenTrendAddMethod)
+        #
+        # # pageRank
+        # opForm = opinionFromationModel(data, PageRankCenSeed)
+        # pageRankCenSeed = opForm.degroot()
+        # write2file("trends/" + dataset + "/degroot/pageRank.csv", pageRankCenSeed)
+        # pageRankTrendProposedModel = opForm.proposedModel()
         # write2file("trends/" + dataset + "/proposedModel/pageRank.csv", pageRankTrendProposedModel)
-        pageRankTrendAddMethod = opForm.addMethod()
-        # write2file("trends/" + dataset + "/addMethod/pageRank.csv", pageRankTrendAddMethod)
+        # pageRankTrendAddMethod = opForm.addMethod()
+        # # write2file("trends/" + dataset + "/addMethod/pageRank.csv", pageRankTrendAddMethod)
 
     # program runtime estimation
     end = time.time()
