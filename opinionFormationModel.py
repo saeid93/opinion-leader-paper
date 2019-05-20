@@ -1,6 +1,11 @@
 
 
 import numpy as np
+import networkx as nx
+import ndlib.models.ModelConfig as mc
+import ndlib.models.opinions.AlgorithmicBiasModel as ab
+
+
 
 class opinionFromationModel:
     def __init__(self,graph,seed):
@@ -73,6 +78,7 @@ class opinionFromationModel:
     def setSeed(self,seed):
         self.seed = seed
 
+    # ------------- degroot model -------------
     def degroot(self):
         self.makeDegrootTruthMatrix()
         opinions = np.zeros(np.shape(self.graph)[0])
@@ -88,6 +94,8 @@ class opinionFromationModel:
         return trend
         # print("degroot")
 
+
+    # ------------- proposed model -------------
     def proposedModel(self):
         (W,D) = self.makeProposedTruthMatrix()
         opinions = np.zeros(np.shape(self.graph)[0])
@@ -105,5 +113,39 @@ class opinionFromationModel:
         return trend
 
 
+    # ------------- added model -------------
     def addMethod(self):
+
+        nxGraph = nx.DiGraph(self.graph)
+
+
+        # Model selection
+        model = ab.AlgorithmicBiasModel(nxGraph)
+
+        # Model configuration
+        config = mc.Configuration()
+        config.add_model_parameter("epsilon", 0.32)
+        config.add_model_parameter("gamma", 1)
+
+        model.set_initial_status(config)
+
+        for key in model.status:
+            if key in self.seed:
+                model.status[key] = 1
+            else:
+                model.status[key] = 0.001
+
+        numOfIters = 100
+
+        trendArr = []
+
+        for i in range(0, numOfIters):
+            iterations = model.iteration_bunch(1)
+            trends = model.build_trends(iterations)
+            di = model.status
+            infectedTrend = np.sum(list(map(lambda x: di[x], di)))
+            trendArr.append(infectedTrend)
+
+        return trendArr
+
         print("added method")
