@@ -1,5 +1,5 @@
 
-from reader import reader
+from reader import read
 from topKFinder import topKFinder
 from otherTopK import otherTopK
 from opinionFormationModel import opinionFromationModel
@@ -27,8 +27,7 @@ def main():
     numOfNodes = numOfNodes + 1 # if index is from 1
     dataset = "advogato"
     # dataset = 'test'
-    read = reader("Datasets/" + dataset + ".txt", numOfNodes)
-    data = read.reader()
+    data = read("Datasets/" + dataset + ".txt", numOfNodes)
     # ----------top-k nodes finder----------
 
     if option == 1:
